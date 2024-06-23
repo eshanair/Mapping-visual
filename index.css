@@ -1,0 +1,616 @@
+html,
+body {
+    overflow: hidden;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: 'Raleway', sans-serif;
+    /* Use Roboto font */
+    font-weight: 400;
+    /* Light */
+    font-size: 15px;
+    line-height: 20px;
+    color: var(--color-onsecondary);
+    background-color: var(--color-secondary);
+    transition: color 0.5s, font-size 0.5s;
+}
+
+.theme {
+    --color-primary: #353439;
+    --color-onprimary: #b6b6fc;
+    --color-secondary: #1c1c22;
+    --color-onsecondary: #cacaca;
+    --color-plain: #26262b;
+    --color-onplain: #fefefe;
+    --color-accent: #fa7fef;
+    --color-accent-off: #859996;
+    --color-onaccent: #2d6b54;
+    --color-accent-text: #41a3ff;
+    --color-geo-access: #fa7fef;
+    --color-geo-live: #16daea;
+    --color-geo-anomaly: #ff5488;
+    --color-brand: #63c2b6;
+    --color-input-text: #298af7;
+    --color-input-btn: #2185e0;
+    --color-increase: #fa7fef;
+    --color-decrease: #ff4545;
+    --color-alert-A: #df0d0e;
+    --color-alert-B: #f06014;
+    --color-alert-C: #ddc258;
+}
+
+input[type="text"] {
+    font: 300 14px 'Raleway', sans-serif;
+    line-height: 18px;
+    color: var(--color-onplain);
+    padding: 5px;
+    margin: 3px;
+    outline: none;
+}
+
+input[type="submit"],
+[type="button"] {
+    font: 300 12px 'Raleway', sans-serif;
+    color: var(--color-onaccent);
+    background-color: var(--color-accent);
+    border: 0px #5d94ea solid;
+    padding: 7px;
+    width: 65px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+input[type="submit"],
+[type="button"]:hover {
+    color: var(--color-accent);
+    background-color: var(--color-onaccent);
+}
+
+input::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+div {
+    margin: 0px;
+    padding: 0px;
+    border: 0px #efefef solid;
+}
+
+.font1 {
+    font-family: 300 2rem 'Raleway', sans-serif;
+}
+
+.font2 {
+    font-weight: 300;
+    font-size: 5rem;
+    font-family: 'Cormorant', serif;
+}
+
+.italic {
+    font-style: italic;
+}
+
+/* .title {
+text-align: center;
+margin: 0 auto;
+margin-bottom: 10px;
+line-height: 5rem;
+font: 300 2rem 'Roboto', sans-serif;
+color: var(--color-onprimary);
+} */
+
+h1 {
+    font: 300 40px 'Cormorant', sans-serif;
+    font-style: italic;
+    margin: 30px;
+    margin-bottom: 0px;
+    color: #b2b2b2;
+    padding: 15px;
+    text-align: left;
+}
+
+a {
+    color: #88579f;
+    /* Light purple color */
+    text-decoration: none;
+    position: relative;
+}
+
+/* Add this style to add space between text and underline */
+a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    bottom: -3px;
+    /* Adjust the value to increase/decrease space */
+    left: 0;
+    background-color: #88579f;
+    /* Light purple color */
+    visibility: hidden;
+    transform: scaleX(0);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Add this style to show underline on hover */
+a:hover::after {
+    visibility: visible;
+    transform: scaleX(1);
+}
+
+button {
+    display: inline-block;
+    font: 300 14px 'Raleway', sans-serif;
+    color: #303030;
+    /* background-color: var(--color-accent); */
+    margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 0px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: var(--color-accent-off);
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+}
+
+
+
+.button-container button {
+    margin: 0 10px;
+}
+
+.arrowbutton {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 200;
+}
+
+.arrowbutton svg {
+    width: 50px;
+    height: 50px;
+    margin-left: 0px;
+    /* Adjust as needed for spacing */
+}
+
+.link-container {
+    margin-top: 30px;
+    /* Adjust margin between the container and the content */
+}
+
+.link-container .col-auto {
+    text-align: left;
+    /* Align D3 Maps to the left */
+}
+
+.link-container .col-auto:last-child {
+    text-align: right;
+    /* Align Folium Maps to the right */
+}
+
+.title {
+    font: 300 2rem 'Raleway', sans-serif;
+    color: white;
+    font-size: 60px;
+    /* Equal to 3.75rem assuming 16px font size */
+    display: block;
+    text-align: left;
+    padding-left: 30px;
+    padding-right: 30px;
+    position: relative;
+    margin: 30px;
+    margin-top: 50px;
+    margin-bottom: 0px;
+    line-height: 1.2;
+    /* Adjusted for uniform line spacing */
+    height: auto;
+    /* Change height to auto to accommodate the new line-spacing */
+}
+
+.typewriter {
+    overflow: hidden;
+    border-right: .1em solid #88579f;
+    /* The typewriter cursor */
+    white-space: nowrap;
+    /* num chars?? */
+    width: 35ch;
+    animation: typing 3.5s steps(40, end), blink-caret .75s step-end 3.5s 1 forwards;
+}
+
+.scroll-down {
+    position: relative;
+    bottom: 100px;
+    left: 5%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: 16px;
+    color: #88579f;
+}
+
+.scroll-down svg {
+    display: block;
+    margin: 0 auto;
+    animation: bounce 4s infinite;
+}
+
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-10px);
+    }
+
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* The typing effect */
+@keyframes typing {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 36ch;
+        /* Change '40ch' to match the length of your text */
+    }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+
+    from,
+    to {
+        border-color: transparent;
+    }
+
+    50% {
+        border-color: #88579f;
+    }
+}
+
+.firstpage {
+    width: auto;
+    height: 100%;
+}
+
+.load-in-effect {
+    opacity: 0;
+    transform: translateY(40px);
+    animation: loadInAnimation 2s ease forwards;
+}
+
+.note {
+    color: #88579f;
+}
+
+.load-in-effect-note {
+    opacity: 0;
+    transform: translateY(20px);
+    animation-name: loadInAnimation;
+    animation-duration: 2s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+    animation-delay: 1s;
+}
+
+.load-in-effect-button {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: loadInAnimation 2s ease forwards;
+}
+
+@keyframes loadInAnimation {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.caption {
+    font-size: 20px;
+    text-align: left;
+    position: relative;
+    font-weight: 300;
+    line-height: 40px;
+    margin: 30px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 30px;
+    width: calc(100% - 30px);
+}
+
+.smallcaption {
+    font-size: 20px;
+    text-align: left;
+    position: relative;
+    font-weight: 300;
+    line-height: 35px;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-bottom: 20px;
+    padding: 5px;
+    padding-right: 40px;
+    width: auto;
+    color: #b2b2b2;
+    box-sizing: border-box;
+}
+
+#statesmap,
+#statesmap1 {
+    width: 100%;
+    height: 500px;
+    z-index: 3;
+    display: block;
+    margin-bottom: 100px;
+    position: relative;
+    border: 0px solid silver;
+}
+
+#datalist,
+#datalist1 {
+    display: block;
+    position: relative;
+    padding: 10px;
+    margin-top: 160px;
+    font: 100 13px sans-serif;
+    line-height: 22px;
+    overflow: auto;
+    border: 1px solid #404040;
+    background-color: rgba(120, 120, 120, 0.1);
+}
+
+.legend {
+    padding: 10px;
+    margin-top: 160px;
+    font-size: 13px;
+    line-height: 22px;
+    overflow: auto;
+    border: 1px solid #404040;
+    background-color: rgba(120, 120, 120, 0.1);
+    color: #fff;
+}
+
+.legend-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.legend-table thead th {
+    text-align: left;
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+
+.legend-table td {
+    padding: 4px 8px;
+}
+
+.legend-table .stripe-sample {
+    width: 24px;
+    height: 24px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 10 10"><rect x="0" y="0" width="10" height="10" stroke="black" fill="none"/><line x1="1" y1="10" x2="5" y2="0" stroke="black" stroke-width="0.5"/><line x1="-2" y1="10" x2="2" y2="0" stroke="black" stroke-width="0.5"/><line x1="4" y1="10" x2="8" y2="0" stroke="black" stroke-width="0.5"/><line x1="7" y1="10" x2="11" y2="0" stroke="black" stroke-width="0.5"/><line x1="10" y1="10" x2="14" y2="0" stroke="black" stroke-width="0.5"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.legend-table .gradient-sample {
+    height: 24px;
+    background: linear-gradient(to right, #fff 0%, #4c2160 100%);
+    border-top: 1px solid #404040;
+}
+
+.legend-table .gradient-sample1 {
+    height: 24px;
+    background: linear-gradient(to right, #fff 0%, teal 100%);
+    border-top: 1px solid #404040;
+}
+
+.pybox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 45px;
+    margin: auto;
+    width: calc(100% - 90px);
+    max-width: 960px;
+    box-sizing: border-box;
+    height: 500px;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-content {
+    background-color: #333;
+    padding: 20px;
+    padding-top: 0px;
+    border-radius: 8px;
+    text-align: center;
+    color: white;
+    max-width: 50%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    font-size: 17px;
+    padding-right: 30px;
+    line-height: 2;
+    font-weight: 300;
+}
+
+/* Close button */
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    cursor: pointer;
+}
+
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+@media (max-width: 768px) {
+    .firstpage {
+        height: auto;
+        /* margin-bottom: 200px; */
+    }
+
+    .smallcaption {
+        font-size: 12px;
+        margin-right: 0px;
+        padding-right: 5px;
+    }
+
+    .h1 {
+        font-size: 1.5rem;
+    }
+
+    .arrowbutton span {
+        font-size: 30px;
+    }
+
+    .row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .typewriter {
+        overflow: hidden;
+        border-right: .1em solid #88579f;
+        white-space: normal;
+        animation: none;
+        border: none;
+    }
+
+    .scroll-down {
+        display: none;
+    }
+
+
+    .title {
+        font-size: 2rem;
+        line-height: 2.5rem;
+        position: relative;
+        height: 10%;
+        width: 50vh;
+        height: auto;
+    }
+
+    .font1 {
+        font-family: 300 2rem 'Raleway', sans-serif;
+    }
+
+    .font2 {
+        font-weight: 300;
+        font-size: 2.5rem;
+        font-family: 'Cormorant', serif;
+    }
+
+    .pybox {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 30px;
+    }
+
+    .caption {
+        font-size: 12px;
+        text-align: left;
+        position: relative;
+        font-weight: 300;
+        line-height: 30px;
+        margin: 30px;
+        padding: 30px;
+    }
+
+    #statesmap,
+    #statesmap1 {
+        margin-top: 40px;
+        display: block;
+        position: relative;
+        margin-bottom: 20px;
+        height: 300px;
+        /* Adjusted for smaller screens */
+        border: 0px silver solid;
+        overflow: hidden;
+    }
+
+    #datalist,
+    #datalist1 {
+        justify-content: left;
+        display: block;
+        position: relative;
+        margin: 20px auto 0;
+        margin-bottom: 60px;
+        padding: 10px;
+        width: calc(100% - 30px);
+        max-width: 300px;
+        font: 100 13px;
+        line-height: 22px;
+        overflow-y: auto;
+        border: 1px #404040 solid;
+        background-color: rgba(120, 120, 120, 0.1);
+        z-index: 1;
+    }
+
+    .link-container .col-md-auto {
+        text-align: left;
+        margin-bottom: 10px;
+    }
+
+    .arrowbutton {
+        font-size: 15px;
+    }
+}

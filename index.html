@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang='en' class="theme">
+
+<head>
+	<title>Women's Political Representation and Rights</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- <meta http-equiv="Cache-Control" content="no-cache" /> -->
+
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&display=swap"
+		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+		rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+
+
+	<!-- <script src="static/js/d3-geo-projection.v1.min.js"></script>
+	<script src="static/js/topojson.v2.min.js"></script>
+	<script src="static/js/d3.v4.min.js"></script>
+	<script src="static/js/d3StatesMap.min.js"></script> -->
+
+	<script src="{{ url_for('static', filename='js/d3-geo-projection.v1.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/topojson.v2.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/d3.v4.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/d3StatesMap.min.js') }}"></script>
+
+	<script>
+
+		function getStateCode(s) {
+			s = s.toUpperCase();
+			if (this.statecodes == null) {
+				this.statecodes = new Map();
+				this.statecodes.set("AL", "01");
+				this.statecodes.set("AK", "02");
+				this.statecodes.set("AZ", "04");
+				this.statecodes.set("AR", "05");
+				this.statecodes.set("CA", "06");
+				this.statecodes.set("CO", "08");
+				this.statecodes.set("CT", "09");
+				this.statecodes.set("DE", "10");
+				this.statecodes.set("DC", "11");
+				this.statecodes.set("FL", "12");
+				this.statecodes.set("GA", "13");
+				this.statecodes.set("HI", "15");
+				this.statecodes.set("ID", "16");
+				this.statecodes.set("IL", "17");
+				this.statecodes.set("IN", "18");
+				this.statecodes.set("IA", "19");
+				this.statecodes.set("KS", "20");
+				this.statecodes.set("KY", "21");
+				this.statecodes.set("LA", "22");
+				this.statecodes.set("ME", "23");
+				this.statecodes.set("MD", "24");
+				this.statecodes.set("MA", "25");
+				this.statecodes.set("MI", "26");
+				this.statecodes.set("MN", "27");
+				this.statecodes.set("MS", "28");
+				this.statecodes.set("MO", "29");
+				this.statecodes.set("MT", "30");
+				this.statecodes.set("NE", "31");
+				this.statecodes.set("NV", "32");
+				this.statecodes.set("NH", "33");
+				this.statecodes.set("NJ", "34");
+				this.statecodes.set("NM", "35");
+				this.statecodes.set("NY", "36");
+				this.statecodes.set("NC", "37");
+				this.statecodes.set("ND", "38");
+				this.statecodes.set("OH", "39");
+				this.statecodes.set("OK", "40");
+				this.statecodes.set("OR", "41");
+				this.statecodes.set("PA", "42");
+				this.statecodes.set("RI", "44");
+				this.statecodes.set("SC", "45");
+				this.statecodes.set("SD", "46");
+				this.statecodes.set("TN", "47");
+				this.statecodes.set("TX", "48");
+				this.statecodes.set("UT", "49");
+				this.statecodes.set("VT", "50");
+				this.statecodes.set("VA", "51");
+				this.statecodes.set("WA", "53");
+				this.statecodes.set("WV", "54");
+				this.statecodes.set("WI", "55");
+				this.statecodes.set("WY", "56");
+
+				this.statecodes.set("AS", "60");
+				this.statecodes.set("FM", "64");
+				this.statecodes.set("GU", "66");
+				this.statecodes.set("MH", "68");
+				this.statecodes.set("MP", "69");
+				this.statecodes.set("PW", "70");
+				this.statecodes.set("PR", "72");
+				this.statecodes.set("UM", "74");
+				this.statecodes.set("VI", "78");
+			}
+
+			if (this.statecodes.has(s)) return this.statecodes.get(s);
+			else return "";
+		}
+
+		function getStateName(s) {
+			s = s.toUpperCase();
+
+			if (this.statenames == null) {
+				this.statenames = new Map();
+
+				this.statenames.set("AL", "Alabama");
+				this.statenames.set("AK", "Alaska");
+				this.statenames.set("AZ", "Arizona");
+				this.statenames.set("AR", "Arkansas");
+				this.statenames.set("CA", "California");
+				this.statenames.set("CO", "Colorado");
+				this.statenames.set("CT", "Connecticut");
+				this.statenames.set("DE", "Delaware");
+				this.statenames.set("DC", "District of Columbia");
+				this.statenames.set("FL", "Florida");
+				this.statenames.set("GA", "Georgia");
+				this.statenames.set("HI", "Hawaii");
+				this.statenames.set("ID", "Idaho");
+				this.statenames.set("IL", "Illinois");
+				this.statenames.set("IN", "Indiana");
+				this.statenames.set("IA", "Iowa");
+				this.statenames.set("KS", "Kansas");
+				this.statenames.set("KY", "Kentucky");
+				this.statenames.set("LA", "Louisiana");
+				this.statenames.set("ME", "Maine");
+				this.statenames.set("MD", "Maryland");
+				this.statenames.set("MA", "Massachusetts");
+				this.statenames.set("MI", "Michigan");
+				this.statenames.set("MN", "Minnesota");
+				this.statenames.set("MS", "Mississippi");
+				this.statenames.set("MO", "Missouri");
+				this.statenames.set("MT", "Montana");
+				this.statenames.set("NE", "Nebraska");
+				this.statenames.set("NV", "Nevada");
+				this.statenames.set("NH", "New Hampshire");
+				this.statenames.set("NJ", "New Jersey");
+				this.statenames.set("NM", "New Mexico");
+				this.statenames.set("NY", "New York");
+				this.statenames.set("NC", "North Carolina");
+				this.statenames.set("ND", "North Dakota");
+				this.statenames.set("OH", "Ohio");
+				this.statenames.set("OK", "Oklahoma");
+				this.statenames.set("OR", "Oregon");
+				this.statenames.set("PA", "Pennsylvania");
+				this.statenames.set("RI", "Rhode Island");
+				this.statenames.set("SC", "South Carolina");
+				this.statenames.set("SD", "South Dakota");
+				this.statenames.set("TN", "Tennessee");
+				this.statenames.set("TX", "Texas");
+				this.statenames.set("UT", "Utah");
+				this.statenames.set("VT", "Vermont");
+				this.statenames.set("VA", "Virginia");
+				this.statenames.set("WA", "Washington");
+				this.statenames.set("WV", "West Virginia");
+				this.statenames.set("WI", "Wisconsin");
+				this.statenames.set("WY", "Wyoming");
+
+				this.statenames.set("AS", "America Samoa");
+				this.statenames.set("FM", "Federated States of Micronesia");
+				this.statenames.set("GU", "Guam");
+				this.statenames.set("MH", "Marshall Islands");
+				this.statenames.set("MP", "Northern Mariana Islands");
+				this.statenames.set("PW", "Palau");
+				this.statenames.set("PR", "Puerto Rico");
+				this.statenames.set("UM", "U.S. Minor Outlying Islands");
+				this.statenames.set("VI", "Virgin Islands of the United States");
+			}
+
+			if (this.statenames.has(s)) return this.statenames.get(s);
+			else return s;
+		}
+
+	</script>
+
+</head>
+
+<body>
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const modal = document.getElementById('modal');
+			const closeBtn = document.getElementById('close-btn');
+			const typewriter = document.querySelector('.typewriter');
+			typewriter.style.animation = 'none';
+			typewriter.style.border = 'none';
+
+			function startTypewriterAnimation() {
+				const typewriter = document.querySelector('.typewriter');
+				typewriter.style.animation = 'typing 3.5s steps(40, end), blink-caret .75s step-end 3.5s 1 forwards';
+				typewriter.style.borderRight = ' .1em solid #88579f';
+				typewriter.style.display = 'inline-block'; // Ensure typewriter display is reset
+				typewriter.classList.remove('typewriter'); // Remove existing animation class
+				void typewriter.offsetWidth; // Trigger reflow to restart animation
+				typewriter.classList.add('typewriter'); // Add animation class to start typewriter effect
+			}
+			closeBtn.addEventListener('click', function () {
+				modal.classList.add('hidden');
+				document.body.style.overflow = 'auto';
+				startTypewriterAnimation();
+			});
+
+			document.body.style.overflow = 'hidden';
+		});
+	</script>
+	<div id="modal" class="modal">
+		<div class="modal-content">
+			<p><br>This is a map visualization.<br> Explore maps shown with D3.js and Python's Folium. </br>Hover over
+				states
+				for more
+				information.</p>
+			<button id="close-btn" class="close-btn">
+				<!-- SVG for X icon -->
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M18 6L6 18" stroke="white" stroke-width="2" stroke-linecap="round"
+						stroke-linejoin="round" />
+					<path d="M6 6L18 18" stroke="white" stroke-width="2" stroke-linecap="round"
+						stroke-linejoin="round" />
+				</svg>
+			</button>
+		</div>
+	</div>
+
+	<div class="typewriter title">
+		<span class="font1">Women's </span>
+		<span class="font2 italic">Political
+			Representation</span>
+		<span class="font1">and </span>
+		<span class="font2 italic">Rights</span>
+	</div>
+	<div class="firstpage load-in-effect">
+
+
+		<div class="caption">Within US politics, there is a disparity in the representation of men and women in
+			legislature. In 2019, only <a
+				href="https://www.amacad.org/publication/womens-underrepresentation-us-congress">23.7%</a> of the seats
+			in
+			the US Congress were occupied by women, drastically underrepresenting the population of
+			women in this country. However, according to <a
+				href="https://www.pewresearch.org/short-reads/2023/01/03/118th-congress-has-a-record-number-of-women/">Pew
+				Research Center</a>, the 118th Congress (2023-2024)
+			has a record number of women. 128 out of 440 members of this most recent Congress are women, or 28%. Despite
+			this, women are still a minority in the US Congress. <br> In order to
+			better understand how underrepresentation impacts the health of
+			women in the United States, below is an analysis of the percentage of women in legilsature by state, and
+			whether
+			abortions are legal in each state. The second measure is used to see whether higher representation could be
+			correlated to greater access to women's health services. <br> It is clear through this visualization that
+			greater representation correlates to greater abortion access. Presentations like this are important in
+			underscoring the importance of data presentation to the public. Clear visualizations can make points far
+			beyond
+			basic statsics or words. <br><br>
+			<div class="note load-in-effect-note">It is important to note that correlation does not always mean
+				causation.</div>
+		</div>
+
+		<div class="container">
+			<div class="row justify-content-between link-container">
+				<div class="col-auto">
+					<a href="#d3-maps" style="text-decoration: none;" class="arrowbutton">
+						<svg width="30" height="30" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+							<path d="M 10 25 L 40 25 M 30 15 L 40 25 L 30 35" stroke="#88579f" stroke-width="2"
+								fill="none" />
+						</svg>
+						<span style="font-size: 40px;">D3 Maps</span>
+					</a>
+				</div>
+				<div class="col-auto" style="margin-right: 20px;">
+					<a href="#folium-maps" style="text-decoration: none;" class="arrowbutton">
+						<svg width="30" height="30" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg"
+							style="vertical-align: middle;">
+							<path d="M 10 25 L 40 25 M 30 15 L 40 25 L 30 35" stroke="#88579f" stroke-width="2"
+								fill="none" />
+						</svg>
+						<span style="font-size: 40px;">Folium Maps</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<h1 id="d3-maps">Abortion Legality</h1>
+		<div class="smallcaption">This interactive map, created using the D3.js library and JavaScript, visualizes
+			the
+			correlation between the percentage of women in legislative offices in each state and the current status
+			of
+			<a href="https://en.wikipedia.org/wiki/Abortion_law_in_the_United_States_by_state">abortion laws</a>
+			within
+			those states. By hovering over any state, users can access detailed information about
+			the number of female legislators and the specific legal stance on abortion, ranging from fully legal to
+			highly restricted. This comparison aims to shed light on how women's political representation might
+			influence legislative decisions regarding reproductive rights.
+		</div>
+		<div class="row">
+			<div class="col-lg-9 col-md-12">
+				<div id="statesmap"></div>
+			</div>
+			<div class="col-lg-2 col-md-12">
+				<div id="datalist"></div>
+			</div>
+		</div>
+		<div class="scroll-down">
+			Scroll Down
+			<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+				<path d="M12 18L6 12h12l-6 6zm0-2.828l3.172-3.172H8.828L12 15.172z" fill="#88579f" />
+			</svg>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<h1>Tampon Tax</h1>
+		<div class="smallcaption">This map, also developed using the D3.js library and JavaScript, examines the
+			relationship between women's representation in state legislatures and the imposition of taxes on
+			feminine
+			hygiene products, commonly known as the <a href="https://allianceforperiodsupplies.org/tampon-tax/">"tampon
+				tax."</a> Hover over each state to discover whether feminine
+			hygiene products are taxed and see the corresponding percentage of women in legislative roles. This
+			visualization aims to highlight potential correlations between female legislative presence and the tax
+			policies affecting women's health and wellbeing.</div>
+		<div class="row">
+			<div class="col-lg-9 col-md-12">
+				<div id="statesmap1"></div>
+			</div>
+			<div class="col-lg-2 col-md-12">
+				<div id="datalist1"></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<h1 id="folium-maps">Folium Map</h1>
+		<div class="smallcaption">This map was created with the Folium Python library and overlays three
+			distinct data sets: the percentage of women in legislative offices, the legality of abortion, and the
+			status
+			of the tampon tax in each state. Folium, known for its capability to build interactive maps with
+			Python, allows users to seamlessly explore the layered data. Hover over different states to gain
+			detailed
+			insights into how these issues intersect, providing a holistic view of women's representation and
+			related
+			social policies across the United States.</div>
+		<div class="row" style="height:100%;">
+			<!-- <div class="pybox" id="folium-map">{{ map_html|safe }}</div> -->
+			<iframe src="{{ url_for('static', filename='maps/map.html') }}" class="pybox"></iframe>
+
+		</div>
+
+
+
+		<div id="folium" style="display: flex;justify-content: center;align-items: center; padding: 10px;">
+			<a href="https://colab.research.google.com/drive/1y4TJsHLpZTP0tW_eTHrzht9REIAIZLUW?usp=sharing"
+				target="_blank">
+				View project in Colab
+			</a>
+		</div>
+
+		<svg width="0" height="0">
+			<defs>
+				<pattern id="diagonal-stripe" patternUnits="userSpaceOnUse" width="4" height="4"
+					patternTransform="rotate(45)">
+					<rect width="2" height="4" transform="translate(0,0)" fill="black"></rect>
+				</pattern>
+			</defs>
+		</svg>
+
+		<!-- <script>
+			console.log("Initializing states map...");
+			let d = document.getElementById("statesmap");
+			let width = d.getBoundingClientRect().width;
+			let height = d.getBoundingClientRect().height;
+			var smap = new d3StatesMap()
+				.width(width)
+				.height(height)
+				.colorRange(['white', '#4c2160']);
+
+
+			console.log("Applying d3 to #statesmap");
+			d3.select('#statesmap').call(smap);
+
+			var mapdat = [];
+			d3.csv("/static/js/womens.csv", function (data) {
+				// read CSV
+				console.log("CSV data loaded", data);
+				for (var i = 0; i < data.length; i++) {
+					let inf = "Percentage: " + data[i].Women + "%<br>Legality: " + data[i].Legality;
+					mapdat.push({ id: getStateCode(data[i].Code), state: data[i].States, count: parseInt(data[i].Women), key: data[i].Code, women: data[i].Women, legal: data[i].Legality, info: inf });
+				}
+
+				let mld = document.createElement('div');
+				mld.setAttribute("style", "margin:6px;");
+				mld.innerHTML = `
+			<table class="legend-table">
+				<thead>
+				<tr><th colspan="2">Key</th></tr>
+				</thead>
+				<tbody>
+				<tr>
+					<td class="stripe-sample"></td>
+					<td>States where abortions are illegal</td>
+				</tr>
+				<tr><td>0</td><td>Illegal Abortion</td></tr>
+				<tr><td>1</td><td>Restricted Abortion</td></tr>
+				<tr><td>2</td><td>Limited Abortion</td></tr>
+				<tr><td>3</td><td>Unrestricted Abortion</td></tr>
+				<tr><th colspan="2"> Women in Legislative Office</th></tr>
+				<tr>
+					<td>%</td>
+					<td colspan="2" class="gradient-sample"></td>
+				</tr>
+				</tbody>
+			</table>`;
+
+				document.getElementById('datalist').appendChild(mld);
+
+				// update map
+				setTimeout(function () {
+					console.log("Updating map with data", mapdat);
+					smap.data({ heatmap: mapdat });
+					smap.updateMap(true);
+
+				}, 500);
+
+				setTimeout(function () {
+
+					// make stripes
+					var svg = d3.select('#statesmap').select('svg');
+					var legalByState = new Map(mapdat.map(d => [d.state, d.legal]));
+					d3.select("#statesmap").selectAll('.State').each(function (d) {
+
+						var stateName = d.properties.name;
+						var legalStatus = legalByState.get(stateName);
+
+						// Check if the state has legalStatus defined
+						if (legalStatus == 0) {
+							var defs = svg.append('defs');
+
+							var colorstore = this.style.fill;
+							var stripePatternId = `stripes-${stateName}`;
+
+							var stripePattern = svg.select('defs')
+								.append('pattern')
+								.attr('id', stripePatternId)
+								.attr('patternUnits', 'userSpaceOnUse')
+								.attr('width', 4)
+								.attr('height', 4)
+								.attr('patternTransform', 'rotate(45)')
+								.attr('fill', colorstore);
+
+							// Create the line that mimics the background color
+							stripePattern.append('line')
+								.attr('x1', 4)
+								.attr('y1', 0)
+								.attr('x2', 4)
+								.attr('y2', 4)
+								.attr('stroke', colorstore)
+								.attr('stroke-width', 6);
+
+							stripePattern.append('line')
+								.attr('x1', 0)
+								.attr('y1', 0)
+								.attr('x2', 0)
+								.attr('y2', 4)
+								.attr('stroke', 'black')
+								.attr('stroke-width', 3);
+
+							d3.select(this).style('fill', `url(#${stripePatternId})`);
+							console.log("first stripes loaded")
+						}
+					});
+				}, 1000);
+			});
+			d3.selectAll('defs').remove();
+		</script> -->
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
+				console.log("Initializing states map...");
+
+				requestAnimationFrame(function () {
+					let d = document.getElementById("statesmap");
+					let width = d.getBoundingClientRect().width;
+					let height = d.getBoundingClientRect().height;
+
+					var smap = new d3StatesMap()
+						.width(width)
+						.height(height)
+						.colorRange(['white', '#4c2160']);
+
+					console.log("Applying d3 to #statesmap");
+					d3.select('#statesmap').call(smap);
+
+					var mapdat = [];
+					d3.csv("/static/js/womens.csv", function (data) {
+						// read CSV
+						console.log("CSV data loaded", data);
+						for (var i = 0; i < data.length; i++) {
+							let inf = "Percentage: " + data[i].Women + "%<br>Legality: " + data[i].Legality;
+							mapdat.push({ id: getStateCode(data[i].Code), state: data[i].States, count: parseInt(data[i].Women), key: data[i].Code, women: data[i].Women, legal: data[i].Legality, info: inf });
+						}
+
+						let mld = document.createElement('div');
+						mld.setAttribute("style", "margin:6px;");
+						mld.innerHTML = `
+					<table class="legend-table">
+						<thead>
+						<tr><th colspan="2">Key</th></tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td class="stripe-sample"></td>
+							<td>States where abortions are illegal</td>
+						</tr>
+						<tr><td>0</td><td>Illegal Abortion</td></tr>
+						<tr><td>1</td><td>Restricted Abortion</td></tr>
+						<tr><td>2</td><td>Limited Abortion</td></tr>
+						<tr><td>3</td><td>Unrestricted Abortion</td></tr>
+						<tr><th colspan="2"> Women in Legislative Office</th></tr>
+						<tr>
+							<td>%</td>
+							<td colspan="2" class="gradient-sample"></td>
+						</tr>
+						</tbody>
+					</table>`;
+
+						document.getElementById('datalist').appendChild(mld);
+
+						// update map
+						setTimeout(function () {
+							console.log("Updating map with data", mapdat);
+							smap.data({ heatmap: mapdat });
+							smap.updateMap(true);
+
+						}, 500);
+
+						setTimeout(function () {
+
+							// make stripes
+							var svg = d3.select('#statesmap').select('svg');
+							var legalByState = new Map(mapdat.map(d => [d.state, d.legal]));
+							d3.select("#statesmap").selectAll('.State').each(function (d) {
+
+								var stateName = d.properties.name;
+								var legalStatus = legalByState.get(stateName);
+
+								// Check if the state has legalStatus defined
+								if (legalStatus == 0) {
+									var defs = svg.append('defs');
+
+									var colorstore = this.style.fill;
+									var stripePatternId = `stripes-${stateName}`;
+
+									var stripePattern = svg.select('defs')
+										.append('pattern')
+										.attr('id', stripePatternId)
+										.attr('patternUnits', 'userSpaceOnUse')
+										.attr('width', 4)
+										.attr('height', 4)
+										.attr('patternTransform', 'rotate(45)')
+										.attr('fill', colorstore);
+
+									// Create the line that mimics the background color
+									stripePattern.append('line')
+										.attr('x1', 4)
+										.attr('y1', 0)
+										.attr('x2', 4)
+										.attr('y2', 4)
+										.attr('stroke', colorstore)
+										.attr('stroke-width', 6);
+
+									stripePattern.append('line')
+										.attr('x1', 0)
+										.attr('y1', 0)
+										.attr('x2', 0)
+										.attr('y2', 4)
+										.attr('stroke', 'black')
+										.attr('stroke-width', 3);
+
+									d3.select(this).style('fill', `url(#${stripePatternId})`);
+									console.log("first stripes loaded")
+								}
+							});
+						}, 1000);
+					});
+					d3.selectAll('defs').remove();
+				});
+			});
+		</script>
+		<svg width="0" height="0">
+			<defs>
+				<pattern id="diagonal-stripe-1" patternUnits="userSpaceOnUse" width="4" height="4"
+					patternTransform="rotate(45)">
+					<rect width="2" height="4" transform="translate(0,0)" fill="black"></rect>
+				</pattern>
+			</defs>
+		</svg>
+
+		<script>
+			//tampon tax map
+			let m = document.getElementById("statesmap1");
+			let width = m.getBoundingClientRect().width;
+			let height = m.getBoundingClientRect().height;
+			var tmap = new d3StatesMap()
+				.width(width)
+				.height(height)
+				.colorRange(['white', 'teal']); // Set the color range to blue
+			//.colorRange(['green','red']);
+			d3.select('#statesmap1').call(tmap);
+
+			var mapdat1 = [];
+			d3.csv("/static/js/tampontax.csv", function (data) {
+				// read CSV
+				for (var i = 0; i < data.length; i++) {
+					//console.log(data[i]);
+					let inf = "Percentage: " + data[i].Women + "%<br>Taxed: " + data[i].Tampon;
+					mapdat1.push({ id: this.getStateCode(data[i].Code), state: data[i].States, count: parseInt(data[i].Women), key: data[i].Code, women: data[i].Women, legal: data[i].Tampon, info: inf });
+				}
+
+				let mld1 = document.createElement('div');
+				mld1.setAttribute("style", "margin:6px;");
+				// mld1.innerHTML = "<table>"
+				// 	+ "<tr><td colspan=2 >Tampon Tax</td></tr>"
+				// 	+ "<tr><td> 0 </td> <td> No Sales Tax </td></tr>"
+				// 	+ "<tr><td> 1 </td> <td> No Tampon Tax </td></tr>"
+				// 	+ "<tr><td> 2 </td> <td> Standard Tax Rate </td></tr>"
+				// 	+ "</table>";
+				mld1.innerHTML = `
+			<table class="legend-table">
+				<thead>
+				<tr><th colspan="2">Key</th></tr>
+				</thead>
+				<tbody>
+				<tr>
+					<td class="stripe-sample"></td>
+					<td>States with Tampon Tax</td>
+				</tr>
+				<tr><td>0</td><td>No Sales Tax</td></tr>
+				<tr><td>1</td><td>No Tampon Tax</td></tr>
+				<tr><td>2</td><td>Standard Tax Rate</td></tr>
+				<tr><th colspan="2"> Women in Legislative Office</th></tr>
+				<tr>
+					<td>%</td>
+					<td colspan="2" class="gradient-sample1"></td>
+				</tr>
+				</tbody>
+			</table>`;
+
+				document.getElementById('datalist1').appendChild(mld1);
+				// update map
+				setTimeout(function () {
+					console.log("Updating map with data", mapdat1);
+					tmap.data({ heatmap: mapdat1 });
+					tmap.updateMap(true);
+
+				}, 500);
+
+				setTimeout(function () {
+
+					// make stripes
+					var svg1 = d3.select('#statesmap1').select('svg');
+					var taxByState = new Map(mapdat1.map(d => [d.state, d.legal]));
+					// console.log(taxByState);
+					// console.log(m);
+
+					d3.select("#statesmap1").selectAll('.State').each(function (m) {
+
+						var stateName = m.properties.name;
+						var taxStatus = taxByState.get(stateName);
+
+						// Check if the state has legalStatus defined
+						if (taxStatus == 2) {
+							// var defs = svg1.append('defs');
+							var defs1 = svg1.append('defs');
+
+							var colorstore1 = this.style.fill;
+							// console.log(colorstore1);
+							var stripePatternId1 = `stripes1-${stateName}`;
+
+							var stripePattern1 = svg1.select('defs')
+								.append('pattern')
+								.attr('id', stripePatternId1)
+								.attr('patternUnits', 'userSpaceOnUse')
+								.attr('width', 4)
+								.attr('height', 4)
+								.attr('patternTransform', 'rotate(45)')
+								.attr('fill', colorstore1);
+
+							// Create the line that mimics the background color
+							stripePattern1.append('line')
+								.attr('x1', 4)
+								.attr('y1', 0)
+								.attr('x2', 4)
+								.attr('y2', 4)
+								.attr('stroke', colorstore1)
+								.attr('stroke-width', 6);
+
+							stripePattern1.append('line')
+								.attr('x1', 0)
+								.attr('y1', 0)
+								.attr('x2', 0)
+								.attr('y2', 4)
+								.attr('stroke', 'black')
+								.attr('stroke-width', 3);
+							d3.select(this).style('fill', `url(#${stripePatternId1})`);
+							console.log("second stripes loaded")
+						}
+					});
+				}, 1000);
+			});
+
+		</script>
+
+</body>
+
+</html>
